@@ -1,0 +1,40 @@
+{
+  "name": "table-component",
+  "version": "1.0.0",
+  "description": "ShopBack assignment",
+  "repository": "NA",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "source": "src/index.js",
+  "author": "Dominic Lee <dominiclee0512@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "dev": "microbundle-crl watch --no-compress --format modern,cjs",
+    "test": "run-s test:unit test:lint",
+    "test:lint": "eslint .",
+    "test:unit": "cross-env CI=true react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
+    "prod": "run-s test:unit test:lint build"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-config-standard-react": "^9.2.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "microbundle-crl": "^0.13.10",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1"
+  }
+}

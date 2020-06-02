@@ -1,0 +1,30 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "table component demo examples",
+  "main": "src/index.js",
+  "repository": "NA",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env SKIP_PREFLIGHT_CHECK=true react-scripts start"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
+    "table-component": "link:.."
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
