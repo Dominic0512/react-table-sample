@@ -6,7 +6,16 @@ import 'table-component/dist/index.css'
 
 import makeMockData from './makeMockData'
 
+const OptionCtrlContainer = styled.div`
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 150px;
+  background-color: gray;
+`
+
 const Container = styled.div`
+  margin-top: 150px;
   display: flex;
 `
 
@@ -16,8 +25,9 @@ const Col = styled.div`
   overflow: scroll;
 `
 
+const data = makeMockData(101)
+
 const App = () => {
-  const data = makeMockData(101)
   const headers = [
     {
       displayName: 'Name',
@@ -46,14 +56,26 @@ const App = () => {
   ]
 
   return (
-    <Container>
-      <Col flex={2}>
-        <Table headers={headers} data={data} />
-      </Col>
-      <Col flex={1}>
-        <pre>{JSON.stringify(data, undefined, 2)}</pre>
-      </Col>
-    </Container>
+    <>
+      <OptionCtrlContainer></OptionCtrlContainer>
+      <Container>
+        <Col flex={2}>
+          <Table
+            headers={headers}
+            data={data}
+            isEnablePagination={true}
+            options={{
+              pagination: {
+                pageSize: 30
+              }
+            }}
+          />
+        </Col>
+        <Col flex={1}>
+          <pre>{JSON.stringify(data, undefined, 2)}</pre>
+        </Col>
+      </Container>
+    </>
   )
 }
 

@@ -28,13 +28,10 @@ export const useTable = ({ data, headers, plugins }) => {
 
   const defaultRows = initializeData(headers, data)
 
-  let initialProps = {
-    pageSize: 20
-  }
+  let initialProps = {}
 
   plugins.map((plugin) => {
     initialProps = {
-      ...initialProps,
       ...plugin.props
     }
   })

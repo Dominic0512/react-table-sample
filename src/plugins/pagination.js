@@ -2,10 +2,19 @@ import React from 'react'
 
 const pluginName = 'PLUGIN_PAGINATION'
 
+const defaultProps = {
+  pageSize: 25
+}
+
 export const usePagination = (props) => {
+  const initialProps = {
+    ...defaultProps,
+    ...props
+  }
+
   return {
     name: pluginName,
-    props: props,
+    props: initialProps,
     reducer: reducer,
     expandInstance: expandInstance
   }
@@ -39,7 +48,7 @@ function reducer(state, action, instance) {
 }
 
 function expandInstance(instance) {
-  const { rows, state, dispatch, pageSize } = instance
+  const { rows, state, dispatch } = instance
 
   const goToPage = React.useCallback((page) => {
     dispatch({
@@ -78,6 +87,7 @@ function expandInstance(instance) {
 
   Object.assign(instance, {
     pageRows,
+    pageSize: state.pageSize,
     curPage: state.curPage,
     totalPage: state.totalPage,
     isFirstPage,
