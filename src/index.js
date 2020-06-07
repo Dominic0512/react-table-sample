@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { useTable } from './useTable'
-import { usePagination } from './plugins/pagination'
-import { useSorter } from './plugins/sorter'
+import { usePaginator } from './plugins/usePaginator'
+import { useSorter } from './plugins/useSorter'
 
-const renderPagination = (tableInstance) => {
+const renderPaginator = (tableInstance) => {
   const {
     pageSize,
     curPage,
@@ -91,15 +91,15 @@ const Table = ({ headers, data, options }) => {
 
   const plugins = []
 
-  const paginationProps = {
-    ...options.pagination
+  const paginatorProps = {
+    ...options.paginator
   }
 
   const sorter = useSorter({})
   plugins.push(sorter)
 
-  const pagination = usePagination(paginationProps)
-  plugins.push(pagination)
+  const paginator = usePaginator(paginatorProps)
+  plugins.push(paginator)
 
   const tableInstance = useTable({
     headers,
@@ -111,7 +111,7 @@ const Table = ({ headers, data, options }) => {
 
   return (
     <React.Fragment>
-      {isEnablePlugin('pagination') && renderPagination(tableInstance)}
+      {isEnablePlugin('paginator') && renderPaginator(tableInstance)}
       <table>
         <thead>
           <tr>
@@ -121,7 +121,7 @@ const Table = ({ headers, data, options }) => {
           </tr>
         </thead>
         <tbody>
-          {isEnablePlugin('pagination')
+          {isEnablePlugin('paginator')
             ? renderRows(pageRows)
             : renderRows(rows)}
         </tbody>

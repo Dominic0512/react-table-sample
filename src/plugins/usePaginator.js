@@ -1,12 +1,12 @@
 import React from 'react'
 
-const pluginName = 'PLUGIN_PAGINATION'
+const pluginName = 'PlUGIN_PAGINATOR'
 
 const defaultProps = {
   pageSize: 25
 }
 
-export const usePagination = (props) => {
+export const usePaginator = (props) => {
   const initialProps = {
     ...defaultProps,
     ...props

@@ -64,7 +64,7 @@ const App = () => {
             headers={headers}
             data={data}
             options={{
-              pagination: {
+              paginator: {
                 pageSize: 30
               },
               sorter: {}
