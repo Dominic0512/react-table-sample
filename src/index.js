@@ -4,6 +4,10 @@ import { useTable } from './useTable'
 import { usePaginator } from './plugins/usePaginator'
 import { useSorter } from './plugins/useSorter'
 
+import styled, { ThemeProvider } from 'styled-components'
+import { color } from 'styled-system'
+import theme from './theme'
+
 const renderPaginator = (tableInstance) => {
   const {
     pageSize,
@@ -81,7 +85,7 @@ const renderRows = (rows) => {
   )
 }
 
-const Table = ({ headers, data, options }) => {
+const Table = ({ headers, data, options, themeMode }) => {
   const isEnablePlugin = React.useCallback(
     (pluginName) => {
       return options.hasOwnProperty(pluginName)
@@ -110,9 +114,9 @@ const Table = ({ headers, data, options }) => {
   const { cols, rows, pageRows, state } = tableInstance
 
   return (
-    <React.Fragment>
+    <ThemeProvider theme={theme[themeMode]}>
       {isEnablePlugin('paginator') && renderPaginator(tableInstance)}
-      <table>
+      <StyledTable color='0'>
         <thead>
           <tr>
             {isEnablePlugin('sorter')
@@ -125,9 +129,13 @@ const Table = ({ headers, data, options }) => {
             ? renderRows(pageRows)
             : renderRows(rows)}
         </tbody>
-      </table>
-    </React.Fragment>
+      </StyledTable>
+    </ThemeProvider>
   )
 }
 
 export default Table
+
+const StyledTable = styled.table`
+  ${color}
+`

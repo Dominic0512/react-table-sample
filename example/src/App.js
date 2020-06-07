@@ -69,6 +69,7 @@ const App = () => {
               },
               sorter: {}
             }}
+            themeMode={'dark'}
           />
         </Col>
         <Col flex={1}>
