@@ -20,13 +20,14 @@ export const usePagination = (props) => {
   }
 }
 
-function reducer(state, action, instance) {
+const reducer = (state, action, instance) => {
   const { pageSize } = instance.props
 
   switch (action.type) {
     case 'init': {
       const { rows } = instance
       return {
+        ...state,
         curPage: 1,
         pageSize,
         totalPage: Math.ceil(rows.length / pageSize)
@@ -41,13 +42,18 @@ function reducer(state, action, instance) {
       }
     }
     case 'reset':
-      return {}
+      return {
+        ...state,
+        curPage: 1,
+        pageSize,
+        totalPage: Math.ceil(rows.length / pageSize)
+      }
     default:
       break
   }
 }
 
-function expandInstance(instance) {
+const expandInstance = (instance) => {
   const { rows, state, dispatch } = instance
 
   const goToPage = React.useCallback((page) => {
@@ -63,7 +69,7 @@ function expandInstance(instance) {
     const pageStart = state.pageSize * (state.curPage - 1)
     const pageEnd = pageStart + state.pageSize
     return rows.slice(pageStart, pageEnd)
-  }, [state.curPage])
+  }, [state.curPage, rows])
 
   const isFirstPage = state.curPage == 1 ? true : false
 

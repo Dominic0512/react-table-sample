@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useTable } from './useTable'
 import { usePagination } from './plugins/pagination'
+import { useSorter } from './plugins/sorter'
 
 const renderPagination = (tableInstance) => {
   const {
@@ -37,6 +38,33 @@ const renderPagination = (tableInstance) => {
   )
 }
 
+const renderHeaders = (cols) => {
+  return (
+    <React.Fragment>
+      {cols.map((col, hIndex) => (
+        <th key={hIndex}>{col.displayName}</th>
+      ))}
+    </React.Fragment>
+  )
+}
+
+const renderSortableHeaders = (tableInstance) => {
+  const { sortableCols, sortBy, displaySort } = tableInstance
+  return (
+    <React.Fragment>
+      {sortableCols.map((col, hIndex) => (
+        <th key={hIndex} onClick={() => sortBy(col.accessName)}>
+          {col.displayName}
+          {`[${displaySort(col.sort)}]`}
+          {col.hasOwnProperty('sort') && (
+            <span>{col.sort != 0 ? (col.sort == 1 ? ' 🔼' : ' 🔽') : ''}</span>
+          )}
+        </th>
+      ))}
+    </React.Fragment>
+  )
+}
+
 const renderRows = (rows) => {
   return (
     <React.Fragment>
@@ -53,12 +81,22 @@ const renderRows = (rows) => {
   )
 }
 
-const Table = ({ headers, data, isEnablePagination, options }) => {
+const Table = ({ headers, data, options }) => {
+  const isEnablePlugin = React.useCallback(
+    (pluginName) => {
+      return options.hasOwnProperty(pluginName)
+    },
+    [options]
+  )
+
   const plugins = []
 
   const paginationProps = {
     ...options.pagination
   }
+
+  const sorter = useSorter({})
+  plugins.push(sorter)
 
   const pagination = usePagination(paginationProps)
   plugins.push(pagination)
@@ -69,20 +107,23 @@ const Table = ({ headers, data, isEnablePagination, options }) => {
     plugins: plugins
   })
 
-  const { rows, pageRows, state } = tableInstance
+  const { cols, rows, pageRows, state } = tableInstance
+
   return (
     <React.Fragment>
-      {isEnablePagination && renderPagination(tableInstance)}
+      {isEnablePlugin('pagination') && renderPagination(tableInstance)}
       <table>
         <thead>
           <tr>
-            {headers.map((header, hIndex) => (
-              <th key={hIndex}>{header.displayName}</th>
-            ))}
+            {isEnablePlugin('sorter')
+              ? renderSortableHeaders(tableInstance)
+              : renderHeaders(cols)}
           </tr>
         </thead>
         <tbody>
-          {isEnablePagination ? renderRows(pageRows) : renderRows(rows)}
+          {isEnablePlugin('pagination')
+            ? renderRows(pageRows)
+            : renderRows(rows)}
         </tbody>
       </table>
     </React.Fragment>

@@ -63,11 +63,11 @@ const App = () => {
           <Table
             headers={headers}
             data={data}
-            isEnablePagination={true}
             options={{
               pagination: {
                 pageSize: 30
-              }
+              },
+              sorter: {}
             }}
           />
         </Col>

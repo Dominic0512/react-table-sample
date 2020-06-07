@@ -1,6 +1,6 @@
 import React from 'react'
 
-function initializeData(headers, data) {
+const initializeData = (headers, data) => {
   return data.map((row) => {
     row.cells = []
 
@@ -28,15 +28,15 @@ export const useTable = ({ data, headers, plugins }) => {
 
   const defaultRows = initializeData(headers, data)
 
-  let initialProps = {}
-
-  plugins.map((plugin) => {
-    initialProps = {
-      ...plugin.props
+  const initialProps = plugins.reduce((prev, next) => {
+    return {
+      ...prev,
+      ...next.props
     }
-  })
+  }, {})
 
   Object.assign(getInstance(), {
+    cols: headers,
     rows: defaultRows,
     props: initialProps
   })
