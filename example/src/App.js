@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Table from 'table-component'
+import { Table } from 'table-component'
 import 'table-component/dist/index.css'
 
 import makeMockData from './makeMockData'
