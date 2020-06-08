@@ -20,13 +20,19 @@ const Container = styled.div`
   padding: 0px 15px;
 `
 
-const Col = styled.div`
-  flex: ${(props) => props.flex};
-  height: 100vh;
-  overflow: scroll;
-`
-
 const data = makeMockData(101)
+
+const CustomizeCell = ({ text }) => {
+  const onClick = React.useCallback(() => {
+    console.log('CUSTOMIZE CELL IS CLICKED')
+  }, [])
+
+  return (
+    <div style={{ backgroundColor: 'yellow' }} onClick={() => onClick()}>
+      <span>custom: {text}</span>
+    </div>
+  )
+}
 
 const App = () => {
   const headers = [
@@ -75,6 +81,11 @@ const App = () => {
             sorter: {}
           }}
           themeMode={themeMode}
+          components={
+            {
+              // cell: CustomizeCell
+            }
+          }
         />
       </Container>
     </>

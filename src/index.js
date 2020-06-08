@@ -12,6 +12,7 @@ import StyledTable from './components/StyledTable'
 import StyledTh from './components/StyledTh'
 import StyledTd from './components/StyledTd'
 import StyledButton from './components/StyledButton'
+import StyledCell from './components/StyledCell'
 
 const renderPaginator = (tableInstance) => {
   const {
@@ -82,14 +83,18 @@ const renderSortableHeaders = (tableInstance) => {
   )
 }
 
-const renderRows = (rows) => {
+const renderRows = (Cell, rows) => {
   return (
     <React.Fragment>
       {rows.map((row, rIndex) => {
         return (
           <tr key={rIndex}>
-            {row.cells.map((cells, cIndex) => {
-              return <StyledTd key={cIndex}>{`${cells}`}</StyledTd>
+            {row.cells.map((cell, cIndex) => {
+              return (
+                <StyledTd key={cIndex}>
+                  <Cell text={`${cell}`}></Cell>
+                </StyledTd>
+              )
             })}
           </tr>
         )
@@ -98,7 +103,7 @@ const renderRows = (rows) => {
   )
 }
 
-const Table = ({ headers, data, options, themeMode }) => {
+const Table = ({ headers, data, options, themeMode, components }) => {
   const isEnablePlugin = React.useCallback(
     (pluginName) => {
       return options.hasOwnProperty(pluginName)
@@ -126,6 +131,10 @@ const Table = ({ headers, data, options, themeMode }) => {
 
   const { cols, rows, pageRows, state } = tableInstance
 
+  const CellTemplate = components.hasOwnProperty('cell')
+    ? components['cell']
+    : StyledCell
+
   return (
     <ThemeProvider theme={theme[themeMode]}>
       {isEnablePlugin('paginator') && renderPaginator(tableInstance)}
@@ -139,8 +148,8 @@ const Table = ({ headers, data, options, themeMode }) => {
         </thead>
         <tbody>
           {isEnablePlugin('paginator')
-            ? renderRows(pageRows)
-            : renderRows(rows)}
+            ? renderRows(CellTemplate, pageRows)
+            : renderRows(CellTemplate, rows)}
         </tbody>
       </StyledTable>
     </ThemeProvider>

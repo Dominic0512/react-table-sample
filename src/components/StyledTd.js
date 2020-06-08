@@ -14,8 +14,6 @@ const StyledTd = (props) => {
       {...props}
       border='1px solid'
       borderColor='secondary.5'
-      px={[2, 3]}
-      py={[1, 2]}
     ></StylableTd>
   )
 }
