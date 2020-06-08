@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { useTable } from './useTable'
+import { useTheme } from './useTheme'
 import { usePaginator } from './plugins/usePaginator'
 import { useSorter } from './plugins/useSorter'
 
 import { ThemeProvider } from 'styled-components'
-import theme from './theme'
 
 import StyledTable from './components/StyledTable'
 import StyledTh from './components/StyledTh'
@@ -124,8 +124,10 @@ const Table = ({ headers, data, options, themeMode, components }) => {
     customizableComponent[component] = components[component]
   })
 
+  const { getTheme } = useTheme({ customThemes: options.customThemes || [] })
+
   return (
-    <ThemeProvider theme={theme[themeMode]}>
+    <ThemeProvider theme={getTheme(themeMode)}>
       {isEnablePlugin('paginator') &&
         renderPaginator(customizableComponent['paginator'], tableInstance)}
       <StyledTable>

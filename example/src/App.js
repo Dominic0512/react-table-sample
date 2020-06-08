@@ -116,6 +116,8 @@ const App = () => {
       <OptionCtrlContainer>
         <button onClick={() => setThemeMode('dark')}>dark</button>
         <button onClick={() => setThemeMode('light')}>light</button>
+        <button onClick={() => setThemeMode('blue')}>blue</button>
+        <button onClick={() => setThemeMode('red')}>red</button>
       </OptionCtrlContainer>
       <Container>
         <Table
@@ -125,7 +127,14 @@ const App = () => {
             paginator: {
               pageSize: 30
             },
-            sorter: {}
+            sorter: {},
+            customThemes: [
+              {
+                name: 'blue',
+                default: '#045678',
+                secondary: '#FFFFFF'
+              }
+            ]
           }}
           themeMode={themeMode}
           components={

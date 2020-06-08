@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useGetLatestRef } from './helper'
+
 const initializeData = (headers, data) => {
   return data.map((row) => {
     row.cells = []
@@ -10,13 +12,6 @@ const initializeData = (headers, data) => {
 
     return row
   })
-}
-
-const useGetLatestRef = (object) => {
-  const ref = React.useRef()
-  ref.current = object
-
-  return React.useCallback(() => ref.current, [])
 }
 
 const initialState = {}
