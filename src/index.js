@@ -4,9 +4,13 @@ import { useTable } from './useTable'
 import { usePaginator } from './plugins/usePaginator'
 import { useSorter } from './plugins/useSorter'
 
-import styled, { ThemeProvider } from 'styled-components'
-import { color } from 'styled-system'
+import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import theme from './theme'
+
+import StyledTable from './components/StyledTable'
+import StyledTr from './components/StyledTr'
+import StyledTh from './components/StyledTh'
+import StyledTd from './components/StyledTd'
 
 const renderPaginator = (tableInstance) => {
   const {
@@ -46,7 +50,15 @@ const renderHeaders = (cols) => {
   return (
     <React.Fragment>
       {cols.map((col, hIndex) => (
-        <th key={hIndex}>{col.displayName}</th>
+        <StyledTh
+          px={[3, 4]}
+          py={[1, 2]}
+          border='1px solid'
+          borderColor='secondary.5'
+          key={hIndex}
+        >
+          {col.displayName}
+        </StyledTh>
       ))}
     </React.Fragment>
   )
@@ -57,13 +69,20 @@ const renderSortableHeaders = (tableInstance) => {
   return (
     <React.Fragment>
       {sortableCols.map((col, hIndex) => (
-        <th key={hIndex} onClick={() => sortBy(col.accessName)}>
+        <StyledTh
+          px={[3, 4]}
+          py={[2, 3]}
+          border='1px solid'
+          borderColor='secondary.5'
+          key={hIndex}
+          onClick={() => sortBy(col.accessName)}
+        >
           {col.displayName}
           {`[${displaySort(col.sort)}]`}
           {col.hasOwnProperty('sort') && (
             <span>{col.sort != 0 ? (col.sort == 1 ? ' 🔼' : ' 🔽') : ''}</span>
           )}
-        </th>
+        </StyledTh>
       ))}
     </React.Fragment>
   )
@@ -74,16 +93,30 @@ const renderRows = (rows) => {
     <React.Fragment>
       {rows.map((row, rIndex) => {
         return (
-          <tr key={rIndex}>
+          <StyledTr key={rIndex}>
             {row.cells.map((cells, cIndex) => {
-              return <td key={cIndex}>{`${cells}`}</td>
+              return (
+                <StyledTd
+                  border='1px solid'
+                  borderColor='secondary.5'
+                  px={[2, 3]}
+                  py={[1, 2]}
+                  key={cIndex}
+                >{`${cells}`}</StyledTd>
+              )
             })}
-          </tr>
+          </StyledTr>
         )
       })}
     </React.Fragment>
   )
 }
+
+const GlobalStyle = createGlobalStyle`
+  table {
+    border-spacing: 0px;
+  }
+`
 
 const Table = ({ headers, data, options, themeMode }) => {
   const isEnablePlugin = React.useCallback(
@@ -115,14 +148,20 @@ const Table = ({ headers, data, options, themeMode }) => {
 
   return (
     <ThemeProvider theme={theme[themeMode]}>
+      <GlobalStyle></GlobalStyle>
       {isEnablePlugin('paginator') && renderPaginator(tableInstance)}
-      <StyledTable color='0'>
+      <StyledTable
+        color='secondary.5'
+        bg='default.0'
+        border='1px solid'
+        borderColor='secondary.5'
+      >
         <thead>
-          <tr>
+          <StyledTr>
             {isEnablePlugin('sorter')
               ? renderSortableHeaders(tableInstance)
               : renderHeaders(cols)}
-          </tr>
+          </StyledTr>
         </thead>
         <tbody>
           {isEnablePlugin('paginator')
@@ -135,7 +174,3 @@ const Table = ({ headers, data, options, themeMode }) => {
 }
 
 export default Table
-
-const StyledTable = styled.table`
-  ${color}
-`

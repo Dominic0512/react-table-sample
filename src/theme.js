@@ -16,12 +16,24 @@ const getAlphaColors = (colorCode) => {
   return colors
 }
 
+const baseTheme = {
+  space: [0, 4, 8, 16, 32, 64, 128, 256]
+}
+
 const theme = {
   light: {
-    colors: getAlphaColors('#f5f5f5')
+    ...baseTheme,
+    colors: {
+      default: getAlphaColors('#f5f5f5'),
+      secondary: getAlphaColors('#191919')
+    }
   },
   dark: {
-    colors: getAlphaColors('#191919')
+    ...baseTheme,
+    colors: {
+      default: getAlphaColors('#191919'),
+      secondary: getAlphaColors('#f5f5f5')
+    }
   }
 }
 

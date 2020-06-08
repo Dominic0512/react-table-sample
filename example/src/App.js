@@ -55,9 +55,14 @@ const App = () => {
     }
   ]
 
+  const [themeMode, setThemeMode] = React.useState('light')
+
   return (
     <>
-      <OptionCtrlContainer></OptionCtrlContainer>
+      <OptionCtrlContainer>
+        <button onClick={() => setThemeMode('dark')}>dark</button>
+        <button onClick={() => setThemeMode('light')}>light</button>
+      </OptionCtrlContainer>
       <Container>
         <Col flex={2}>
           <Table
@@ -69,11 +74,8 @@ const App = () => {
               },
               sorter: {}
             }}
-            themeMode={'dark'}
+            themeMode={themeMode}
           />
-        </Col>
-        <Col flex={1}>
-          <pre>{JSON.stringify(data, undefined, 2)}</pre>
         </Col>
       </Container>
     </>
