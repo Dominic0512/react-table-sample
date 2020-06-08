@@ -12,11 +12,11 @@ const StylableTh = styled.th`
 const StyledTh = (props) => {
   return (
     <StylableTh
-      {...props}
       px={[3, 4]}
       py={[1, 2]}
       border='1px solid'
       borderColor='secondary.5'
+      {...props}
     ></StylableTh>
   )
 }

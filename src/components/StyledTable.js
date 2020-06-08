@@ -13,11 +13,11 @@ const StylableTable = styled.table`
 const StyledTable = (props) => {
   return (
     <StylableTable
-      {...props}
       color='secondary.5'
       bg='default.0'
       border='1px solid'
       borderColor='secondary.5'
+      {...props}
     ></StylableTable>
   )
 }

@@ -56,14 +56,27 @@ const CustomizePaginator = (props) => {
   )
 }
 
-const CustomizeCell = ({ text }) => {
+const CustomizeHeaderCell = ({ cell, ...props }) => {
+  return (
+    <div style={{ backgroundColor: 'yellow' }}>
+      <span>
+        custom: {cell.displayName}{' '}
+        {cell.hasOwnProperty('sort') &&
+          props.hasOwnProperty('displaySort') &&
+          `[${props.displaySort(cell.sort)}]`}
+      </span>
+    </div>
+  )
+}
+
+const CustomizeCell = ({ cell }) => {
   const onClick = React.useCallback(() => {
     console.log('CUSTOMIZE CELL IS CLICKED')
   }, [])
 
   return (
     <div style={{ backgroundColor: 'yellow' }} onClick={() => onClick()}>
-      <span>custom: {text}</span>
+      <span>custom: {cell}</span>
     </div>
   )
 }
@@ -117,8 +130,9 @@ const App = () => {
           themeMode={themeMode}
           components={
             {
-              // cell: CustomizeCell,
-              // paginator: CustomizePaginator
+              // cell: CustomizeCell
+              // headerCell: CustomizeHeaderCell
+              // paginator: CustomizePaginator,
             }
           }
         />

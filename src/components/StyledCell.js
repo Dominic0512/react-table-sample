@@ -8,12 +8,8 @@ const StylableCell = styled.div`
   ${space}
 `
 
-const StyledCell = ({ text, ...props }) => {
-  return (
-    <StylableCell {...props} px={[2, 3]} py={[1, 2]}>
-      {text}
-    </StylableCell>
-  )
+const StyledCell = (props) => {
+  return <StylableCell px={[2, 3]} py={[1, 2]} {...props}></StylableCell>
 }
 
 export default StyledCell

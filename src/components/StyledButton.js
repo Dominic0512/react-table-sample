@@ -31,11 +31,11 @@ const StylableButton = styled.button`
 const StyledButton = (props) => {
   return (
     <StylableButton
-      {...props}
       mx={1}
       px={4}
       py={1}
       variant='primary'
+      {...props}
     ></StylableButton>
   )
 }

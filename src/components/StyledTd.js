@@ -11,9 +11,9 @@ const StylableTd = styled.td`
 const StyledTd = (props) => {
   return (
     <StylableTd
-      {...props}
       border='1px solid'
       borderColor='secondary.5'
+      {...props}
     ></StylableTd>
   )
 }

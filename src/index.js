@@ -11,7 +11,8 @@ import StyledTable from './components/StyledTable'
 import StyledTh from './components/StyledTh'
 import StyledTd from './components/StyledTd'
 
-import DefaultCell from './components/StyledCell'
+import DefaultCell from './Cell'
+import DefaultHeaderCell from './HeaderCell'
 import DefaultPaginator from './Paginator'
 
 const allowedPaginatorProps = [
@@ -28,6 +29,7 @@ const allowedPaginatorProps = [
 
 const customizableComponent = {
   cell: DefaultCell,
+  headerCell: DefaultHeaderCell,
   paginator: DefaultPaginator
 }
 
@@ -43,27 +45,26 @@ const renderPaginator = (Paginator, tableInstance) => {
   return <Paginator {...props}></Paginator>
 }
 
-const renderHeaders = (cols) => {
+const renderHeaders = (HeaderCell, cols) => {
   return (
     <React.Fragment>
       {cols.map((col, hIndex) => (
-        <StyledTh key={hIndex}>{col.displayName}</StyledTh>
+        <StyledTh key={hIndex}>
+          <HeaderCell cell={col}></HeaderCell>
+        </StyledTh>
       ))}
     </React.Fragment>
   )
 }
 
-const renderSortableHeaders = (tableInstance) => {
+const renderSortableHeaders = (HeaderCell, tableInstance) => {
   const { sortableCols, sortBy, displaySort } = tableInstance
+
   return (
     <React.Fragment>
       {sortableCols.map((col, hIndex) => (
         <StyledTh key={hIndex} onClick={() => sortBy(col.accessName)}>
-          {col.displayName}
-          {`[${displaySort(col.sort)}]`}
-          {col.hasOwnProperty('sort') && (
-            <span>{col.sort != 0 ? (col.sort == 1 ? ' 🔼' : ' 🔽') : ''}</span>
-          )}
+          <HeaderCell cell={col} displaySort={displaySort}></HeaderCell>
         </StyledTh>
       ))}
     </React.Fragment>
@@ -79,7 +80,7 @@ const renderRows = (Cell, rows) => {
             {row.cells.map((cell, cIndex) => {
               return (
                 <StyledTd key={cIndex}>
-                  <Cell text={`${cell}`}></Cell>
+                  <Cell cell={cell}></Cell>
                 </StyledTd>
               )
             })}
@@ -131,8 +132,11 @@ const Table = ({ headers, data, options, themeMode, components }) => {
         <thead>
           <tr>
             {isEnablePlugin('sorter')
-              ? renderSortableHeaders(tableInstance)
-              : renderHeaders(cols)}
+              ? renderSortableHeaders(
+                  customizableComponent['headerCell'],
+                  tableInstance
+                )
+              : renderHeaders(customizableComponent['headerCell'], cols)}
           </tr>
         </thead>
         <tbody>
