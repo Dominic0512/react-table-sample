@@ -1,0 +1,33 @@
+{
+  "name": "quick-table",
+  "version": "1.0.0",
+  "description": "table component demo examples",
+  "main": "src/index.js",
+  "repository": "NA",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "cross-env SKIP_PREFLIGHT_CHECK=true react-scripts start"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "namor": "^2.0.2",
+    "react": "link:../../node_modules/react",
+    "react-dom": "link:../../node_modules/react-dom",
+    "react-scripts": "^3.4.1",
+    "styled-components": "^5.1.1",
+    "table-component": "link:../../"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
