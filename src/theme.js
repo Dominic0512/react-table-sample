@@ -20,19 +20,22 @@ const baseTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256]
 }
 
+const whiteColors = getAlphaColors('#f5f5f5')
+const blackColors = getAlphaColors('#191919')
+
 const theme = {
   light: {
     ...baseTheme,
     colors: {
-      default: getAlphaColors('#f5f5f5'),
-      secondary: getAlphaColors('#191919')
+      default: whiteColors,
+      secondary: blackColors
     }
   },
   dark: {
     ...baseTheme,
     colors: {
-      default: getAlphaColors('#191919'),
-      secondary: getAlphaColors('#f5f5f5')
+      default: blackColors,
+      secondary: whiteColors
     }
   }
 }

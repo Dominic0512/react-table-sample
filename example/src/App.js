@@ -7,16 +7,17 @@ import 'table-component/dist/index.css'
 import makeMockData from './makeMockData'
 
 const OptionCtrlContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0px;
   width: 100%;
-  height: 150px;
-  background-color: gray;
+  height: 50px;
+  border-bottom: 2px solid gray;
+  background-color: black;
 `
 
 const Container = styled.div`
-  margin-top: 150px;
-  display: flex;
+  margin-top: 50px;
+  padding: 0px 15px;
 `
 
 const Col = styled.div`
@@ -64,19 +65,17 @@ const App = () => {
         <button onClick={() => setThemeMode('light')}>light</button>
       </OptionCtrlContainer>
       <Container>
-        <Col flex={2}>
-          <Table
-            headers={headers}
-            data={data}
-            options={{
-              paginator: {
-                pageSize: 30
-              },
-              sorter: {}
-            }}
-            themeMode={themeMode}
-          />
-        </Col>
+        <Table
+          headers={headers}
+          data={data}
+          options={{
+            paginator: {
+              pageSize: 30
+            },
+            sorter: {}
+          }}
+          themeMode={themeMode}
+        />
       </Container>
     </>
   )

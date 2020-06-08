@@ -1,8 +1,25 @@
+import React from 'react'
 import styled from 'styled-components'
-import { color, border } from 'styled-system'
+import { color, border, space } from 'styled-system'
 
-const StyledTable = styled.table`
+const StylableTable = styled.table`
   ${color}
   ${border}
+  ${space}
+  border-spacing: 0px;
+  width: 100%;
 `
+
+const StyledTable = (props) => {
+  return (
+    <StylableTable
+      {...props}
+      color='secondary.5'
+      bg='default.0'
+      border='1px solid'
+      borderColor='secondary.5'
+    ></StylableTable>
+  )
+}
+
 export default StyledTable
