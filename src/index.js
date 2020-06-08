@@ -7,53 +7,40 @@ import { useSorter } from './plugins/useSorter'
 import { ThemeProvider } from 'styled-components'
 import theme from './theme'
 
-import StyledContainer from './components/StyledContainer'
 import StyledTable from './components/StyledTable'
 import StyledTh from './components/StyledTh'
 import StyledTd from './components/StyledTd'
-import StyledButton from './components/StyledButton'
-import StyledCell from './components/StyledCell'
 
-const renderPaginator = (tableInstance) => {
-  const {
-    pageSize,
-    curPage,
-    totalPage,
-    isFirstPage,
-    isLastPage,
-    goToFirstPage,
-    goToPreviousPage,
-    goToNextPage,
-    goToLastPage
-  } = tableInstance
+import DefaultCell from './components/StyledCell'
+import DefaultPaginator from './Paginator'
 
-  return (
-    <StyledContainer
-      width='100%'
-      display='inline-flex'
-      my={3}
-      justifyContent='space-between'
-    >
-      <StyledContainer
-        display='flex'
-        alignItems='center'
-      >{`Page: ${curPage}/${totalPage}, PageSize: ${pageSize}`}</StyledContainer>
-      <div>
-        <StyledButton disabled={isFirstPage} onClick={() => goToFirstPage()}>
-          first
-        </StyledButton>
-        <StyledButton disabled={isFirstPage} onClick={() => goToPreviousPage()}>
-          previous
-        </StyledButton>
-        <StyledButton disabled={isLastPage} onClick={() => goToNextPage()}>
-          next
-        </StyledButton>
-        <StyledButton disabled={isLastPage} onClick={() => goToLastPage()}>
-          last
-        </StyledButton>
-      </div>
-    </StyledContainer>
-  )
+const allowedPaginatorProps = [
+  'pageSize',
+  'curPage',
+  'totalPage',
+  'isFirstPage',
+  'isLastPage',
+  'goToFirstPage',
+  'goToPreviousPage',
+  'goToNextPage',
+  'goToLastPage'
+]
+
+const customizableComponent = {
+  cell: DefaultCell,
+  paginator: DefaultPaginator
+}
+
+const renderPaginator = (Paginator, tableInstance) => {
+  const props = Object.keys(tableInstance)
+    .filter((key) => allowedPaginatorProps.includes(key))
+    .reduce((obj, key) => {
+      return {
+        ...obj,
+        [key]: tableInstance[key]
+      }
+    }, {})
+  return <Paginator {...props}></Paginator>
 }
 
 const renderHeaders = (cols) => {
@@ -131,13 +118,15 @@ const Table = ({ headers, data, options, themeMode, components }) => {
 
   const { cols, rows, pageRows, state } = tableInstance
 
-  const CellTemplate = components.hasOwnProperty('cell')
-    ? components['cell']
-    : StyledCell
+  //-- Overwrite customizable component if custom component existed in props
+  Object.keys(components).map((component) => {
+    customizableComponent[component] = components[component]
+  })
 
   return (
     <ThemeProvider theme={theme[themeMode]}>
-      {isEnablePlugin('paginator') && renderPaginator(tableInstance)}
+      {isEnablePlugin('paginator') &&
+        renderPaginator(customizableComponent['paginator'], tableInstance)}
       <StyledTable>
         <thead>
           <tr>
@@ -148,8 +137,8 @@ const Table = ({ headers, data, options, themeMode, components }) => {
         </thead>
         <tbody>
           {isEnablePlugin('paginator')
-            ? renderRows(CellTemplate, pageRows)
-            : renderRows(CellTemplate, rows)}
+            ? renderRows(customizableComponent['cell'], pageRows)
+            : renderRows(customizableComponent['cell'], rows)}
         </tbody>
       </StyledTable>
     </ThemeProvider>
