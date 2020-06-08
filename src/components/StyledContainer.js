@@ -9,7 +9,7 @@ const StylableContainer = styled.div`
 `
 
 const StyledContainer = (props) => {
-  return <StylableContainer {...props}></StylableContainer>
+  return <StylableContainer {...props} />
 }
 
 export default StyledContainer

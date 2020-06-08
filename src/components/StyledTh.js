@@ -17,7 +17,7 @@ const StyledTh = (props) => {
       border='1px solid'
       borderColor='secondary.5'
       {...props}
-    ></StylableTh>
+    />
   )
 }
 export default StyledTh

@@ -13,11 +13,12 @@
     "dev": "microbundle-crl watch --no-compress --format modern,cjs",
     "test": "run-s test:unit test:lint",
     "test:lint": "eslint .",
-    "test:unit": "cross-env CI=true react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test:unit": "cross-env CI=true SKIP_PREFLIGHT_CHECK=true react-scripts test --env=jsdom",
+    "test:watch": "SKIP_PREFLIGHT_CHECK=true react-scripts test --env=jsdom",
     "prod": "run-s test:unit test:lint build"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^3.3.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.1.0",
@@ -36,7 +37,10 @@
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "react-test-renderer": "^16.13.1",
+    "styled-components": "^5.1.1",
+    "styled-system": "^5.1.5"
   },
   "peerDependencies": {
     "react": "^16.13.1",

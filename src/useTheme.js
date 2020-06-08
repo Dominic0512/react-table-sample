@@ -12,7 +12,7 @@ const hexToRGB = (hex) => {
 const getAlphaColors = (colorCode) => {
   const { r, g, b } = hexToRGB(colorCode)
 
-  let colors = []
+  const colors = []
   for (let i = 1; i < 10; i++) {
     colors.push(`rgba(${r}, ${g}, ${b}, ${1 - i * 0.1})`)
   }
@@ -74,7 +74,9 @@ export const useTheme = ({ customThemes }) => {
 
   const getTheme = React.useCallback(
     (themeName) => {
-      if (getInstance().themes.hasOwnProperty(themeName)) {
+      if (
+        Object.prototype.hasOwnProperty.call(getInstance().themes, themeName)
+      ) {
         return themes[themeName]
       }
       return themes[DEFAULT_THEME]

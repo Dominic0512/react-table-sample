@@ -41,13 +41,15 @@ const reducer = (state, action, instance) => {
         curPage: page
       }
     }
-    case 'reset':
+    case 'reset': {
+      const { rows } = instance
       return {
         ...state,
         curPage: 1,
         pageSize,
         totalPage: Math.ceil(rows.length / pageSize)
       }
+    }
     default:
       break
   }
@@ -71,9 +73,9 @@ const expandInstance = (instance) => {
     return rows.slice(pageStart, pageEnd)
   }, [state.curPage, rows])
 
-  const isFirstPage = state.curPage == 1 ? true : false
+  const isFirstPage = state.curPage === 1
 
-  const isLastPage = state.curPage == state.totalPage ? true : false
+  const isLastPage = state.curPage === state.totalPage
 
   const goToFirstPage = React.useCallback(() => {
     return goToPage(1)

@@ -9,13 +9,7 @@ const StylableTd = styled.td`
 `
 
 const StyledTd = (props) => {
-  return (
-    <StylableTd
-      border='1px solid'
-      borderColor='secondary.5'
-      {...props}
-    ></StylableTd>
-  )
+  return <StylableTd border='1px solid' borderColor='secondary.5' {...props} />
 }
 
 export default StyledTd

@@ -9,7 +9,7 @@ const StylableCell = styled.div`
 `
 
 const StyledCell = (props) => {
-  return <StylableCell px={[2, 3]} py={[1, 2]} {...props}></StylableCell>
+  return <StylableCell px={[2, 3]} py={[1, 2]} {...props} />
 }
 
 export default StyledCell

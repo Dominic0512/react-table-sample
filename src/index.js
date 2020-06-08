@@ -42,7 +42,7 @@ const renderPaginator = (Paginator, tableInstance) => {
         [key]: tableInstance[key]
       }
     }, {})
-  return <Paginator {...props}></Paginator>
+  return <Paginator {...props} />
 }
 
 const renderHeaders = (HeaderCell, cols) => {
@@ -50,7 +50,7 @@ const renderHeaders = (HeaderCell, cols) => {
     <React.Fragment>
       {cols.map((col, hIndex) => (
         <StyledTh key={hIndex}>
-          <HeaderCell cell={col}></HeaderCell>
+          <HeaderCell cell={col} />
         </StyledTh>
       ))}
     </React.Fragment>
@@ -64,7 +64,7 @@ const renderSortableHeaders = (HeaderCell, tableInstance) => {
     <React.Fragment>
       {sortableCols.map((col, hIndex) => (
         <StyledTh key={hIndex} onClick={() => sortBy(col.accessName)}>
-          <HeaderCell cell={col} displaySort={displaySort}></HeaderCell>
+          <HeaderCell cell={col} displaySort={displaySort} />
         </StyledTh>
       ))}
     </React.Fragment>
@@ -80,7 +80,7 @@ const renderRows = (Cell, rows) => {
             {row.cells.map((cell, cIndex) => {
               return (
                 <StyledTd key={cIndex}>
-                  <Cell cell={cell}></Cell>
+                  <Cell cell={cell} />
                 </StyledTd>
               )
             })}
@@ -94,7 +94,7 @@ const renderRows = (Cell, rows) => {
 const Table = ({ headers, data, options, themeMode, components }) => {
   const isEnablePlugin = React.useCallback(
     (pluginName) => {
-      return options.hasOwnProperty(pluginName)
+      return Object.prototype.hasOwnProperty.call(options, pluginName)
     },
     [options]
   )
@@ -117,9 +117,9 @@ const Table = ({ headers, data, options, themeMode, components }) => {
     plugins: plugins
   })
 
-  const { cols, rows, pageRows, state } = tableInstance
+  const { cols, rows, pageRows } = tableInstance
 
-  //-- Overwrite customizable component if custom component existed in props
+  // -- Overwrite customizable component if custom component existed in props
   Object.keys(components).map((component) => {
     customizableComponent[component] = components[component]
   })
@@ -129,22 +129,22 @@ const Table = ({ headers, data, options, themeMode, components }) => {
   return (
     <ThemeProvider theme={getTheme(themeMode)}>
       {isEnablePlugin('paginator') &&
-        renderPaginator(customizableComponent['paginator'], tableInstance)}
+        renderPaginator(customizableComponent.paginator, tableInstance)}
       <StyledTable>
         <thead>
           <tr>
             {isEnablePlugin('sorter')
               ? renderSortableHeaders(
-                  customizableComponent['headerCell'],
+                  customizableComponent.headerCell,
                   tableInstance
                 )
-              : renderHeaders(customizableComponent['headerCell'], cols)}
+              : renderHeaders(customizableComponent.headerCell, cols)}
           </tr>
         </thead>
         <tbody>
           {isEnablePlugin('paginator')
-            ? renderRows(customizableComponent['cell'], pageRows)
-            : renderRows(customizableComponent['cell'], rows)}
+            ? renderRows(customizableComponent.cell, pageRows)
+            : renderRows(customizableComponent.cell, rows)}
         </tbody>
       </StyledTable>
     </ThemeProvider>

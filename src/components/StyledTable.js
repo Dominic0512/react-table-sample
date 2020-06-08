@@ -18,7 +18,7 @@ const StyledTable = (props) => {
       border='1px solid'
       borderColor='secondary.5'
       {...props}
-    ></StylableTable>
+    />
   )
 }
 

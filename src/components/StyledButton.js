@@ -29,15 +29,7 @@ const StylableButton = styled.button`
 `
 
 const StyledButton = (props) => {
-  return (
-    <StylableButton
-      mx={1}
-      px={4}
-      py={1}
-      variant='primary'
-      {...props}
-    ></StylableButton>
-  )
+  return <StylableButton mx={1} px={4} py={1} variant='primary' {...props} />
 }
 
 export default StyledButton

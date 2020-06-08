@@ -7,6 +7,7 @@ const initializeData = (headers, data) => {
     row.cells = []
 
     headers.map((header) => {
+      if (!Object.prototype.hasOwnProperty.call(row, header.accessName)) return
       row.cells.push(row[header.accessName])
     })
 
