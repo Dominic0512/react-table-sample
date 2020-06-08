@@ -2,7 +2,7 @@ import React from 'react'
 
 const pluginName = 'PLUGIN_SORTER'
 
-const defaultProps = {}
+export const defaultProps = {}
 
 export const useSorter = (props) => {
   const initialProps = {
@@ -18,7 +18,7 @@ export const useSorter = (props) => {
   }
 }
 
-const sortMap = {
+export const sortMap = {
   0: 'NONE',
   1: 'ASC',
   2: 'DESC'

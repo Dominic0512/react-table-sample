@@ -2,7 +2,7 @@ import React from 'react'
 
 const pluginName = 'PlUGIN_PAGINATOR'
 
-const defaultProps = {
+export const defaultProps = {
   pageSize: 25
 }
 
