@@ -231,6 +231,64 @@ describe('test callback functions for each type of table instance object ', () =
   })
 })
 
+describe('test callback function for instance with plugin different sequence', () => {
+  test('should get right result from sortBy with ideal plugin sequence', () => {
+    const fakeData = makeData(100)
+    const headers = getHeaders()
+
+    const sorter = useSorter({})
+    const paginator = usePaginator({})
+
+    const { result } = renderHook(() =>
+      useTable({
+        data: fakeData,
+        headers: headers,
+        plugins: [sorter, paginator]
+      })
+    )
+
+    const oldRows = [...result.current.rows]
+
+    act(() => {
+      result.current.sortBy(result.current.sortableCols[2].accessName)
+    })
+
+    expect(result.current.sortedRows).toMatchObject(result.current.rows)
+    expect(result.current.sortedRows).not.toMatchObject(oldRows)
+
+    const sortedCols = result.current.rows.map((row) => row.cells[2])
+    expect(sortedCols).toMatchObject(sortedCols.sort((v1, v2) => v1 - v2))
+  })
+
+  test('should get right result from sortBy with not ideal plugin sequence', () => {
+    const fakeData = makeData(100)
+    const headers = getHeaders()
+
+    const sorter = useSorter({})
+    const paginator = usePaginator({})
+
+    const { result } = renderHook(() =>
+      useTable({
+        data: fakeData,
+        headers: headers,
+        plugins: [paginator, sorter]
+      })
+    )
+
+    const oldRows = [...result.current.rows]
+
+    act(() => {
+      result.current.sortBy(result.current.sortableCols[2].accessName)
+    })
+
+    expect(result.current.sortedRows).toMatchObject(result.current.rows)
+    expect(result.current.sortedRows).not.toMatchObject(oldRows)
+
+    const sortedCols = result.current.rows.map((row) => row.cells[2])
+    expect(sortedCols).toMatchObject(sortedCols.sort((v1, v2) => v1 - v2))
+  })
+})
+
 const makeProduct = () => {
   return {
     name: `${Math.floor(Math.random() * 1000)}`,

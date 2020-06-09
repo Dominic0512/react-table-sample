@@ -2,6 +2,8 @@ import React from 'react'
 
 import { useGetLatestRef } from './helper'
 
+const PLUGIN_DEPENDENCIES_SEQUENCE = ['PLUGIN_SORTER', 'PlUGIN_PAGINATOR']
+
 const initializeData = (headers, data) => {
   return data.map((row) => {
     row.cells = []
@@ -24,7 +26,15 @@ export const useTable = ({ data, headers, plugins }) => {
 
   const defaultRows = initializeData(headers, data)
 
-  const initialProps = plugins.reduce((prev, next) => {
+  const sortedPlugins = PLUGIN_DEPENDENCIES_SEQUENCE.reduce((prev, next) => {
+    const nextPlugin = plugins.find((plugin) => plugin.name === next)
+    if (nextPlugin !== undefined) {
+      return [...prev, nextPlugin]
+    }
+    return prev
+  }, [])
+
+  const initialProps = sortedPlugins.reduce((prev, next) => {
     return {
       ...prev,
       ...next.props
@@ -43,7 +53,7 @@ export const useTable = ({ data, headers, plugins }) => {
         throw new Error('Unknown Action')
       }
 
-      const pluginReducers = plugins.map((plugin) => {
+      const pluginReducers = sortedPlugins.map((plugin) => {
         return plugin.reducer
       })
 
@@ -52,7 +62,7 @@ export const useTable = ({ data, headers, plugins }) => {
         state
       )
     },
-    [plugins]
+    [sortedPlugins]
   )
 
   const [reducerState, dispatch] = React.useReducer(reducer, undefined, () =>
@@ -64,7 +74,7 @@ export const useTable = ({ data, headers, plugins }) => {
     dispatch
   })
 
-  plugins.map((plugin) => plugin.expandInstance(getInstance()))
+  sortedPlugins.map((plugin) => plugin.expandInstance(getInstance()))
 
   return getInstance()
 }

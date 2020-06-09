@@ -13,11 +13,11 @@ const Table = ({ headers, data }) => {
     pageSize: 30
   }
 
-  const sorter = useSorter({})
-  plugins.push(sorter)
-
   const paginator = usePaginator(paginatorProps)
   plugins.push(paginator)
+
+  const sorter = useSorter({})
+  plugins.push(sorter)
 
   const tableInstance = useTable({
     headers,

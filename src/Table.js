@@ -105,11 +105,11 @@ const Table = ({ headers, data, options, themeMode, components }) => {
     ...options.paginator
   }
 
-  const sorter = useSorter({})
-  plugins.push(sorter)
-
   const paginator = usePaginator(paginatorProps)
   plugins.push(paginator)
+
+  const sorter = useSorter({})
+  plugins.push(sorter)
 
   const tableInstance = useTable({
     headers,
