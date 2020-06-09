@@ -27,6 +27,18 @@ const allowedPaginatorProps = [
   'goToLastPage'
 ]
 
+const allowedSorterProps = ['displaySort', 'sortBy']
+
+const getPublishProps = (instance, allowProps) =>
+  Object.keys(instance)
+    .filter((key) => allowProps.includes(key))
+    .reduce((obj, key) => {
+      return {
+        ...obj,
+        [key]: instance[key]
+      }
+    }, {})
+
 const customizableComponent = {
   cell: DefaultCell,
   headerCell: DefaultHeaderCell,
@@ -34,14 +46,7 @@ const customizableComponent = {
 }
 
 const renderPaginator = (Paginator, tableInstance) => {
-  const props = Object.keys(tableInstance)
-    .filter((key) => allowedPaginatorProps.includes(key))
-    .reduce((obj, key) => {
-      return {
-        ...obj,
-        [key]: tableInstance[key]
-      }
-    }, {})
+  const props = getPublishProps(tableInstance, allowedPaginatorProps)
   return <Paginator {...props} />
 }
 
@@ -58,13 +63,13 @@ const renderHeaders = (HeaderCell, cols) => {
 }
 
 const renderSortableHeaders = (HeaderCell, tableInstance) => {
-  const { sortableCols, sortBy, displaySort } = tableInstance
-
+  const { sortableCols } = tableInstance
+  const callbackProps = getPublishProps(tableInstance, allowedSorterProps)
   return (
     <React.Fragment>
       {sortableCols.map((col, hIndex) => (
-        <StyledTh key={hIndex} onClick={() => sortBy(col.accessName)}>
-          <HeaderCell cell={col} displaySort={displaySort} />
+        <StyledTh key={hIndex}>
+          <HeaderCell cell={col} {...callbackProps} />
         </StyledTh>
       ))}
     </React.Fragment>

@@ -38,7 +38,10 @@ const CustomizePaginator = (props) => {
 
 const CustomizeHeaderCell = ({ cell, ...props }) => {
   return (
-    <div style={{ backgroundColor: 'yellow' }}>
+    <div
+      style={{ backgroundColor: 'yellow' }}
+      onClick={() => props.sortBy(cell.accessName)}
+    >
       <span>
         custom: {cell.displayName}{' '}
         {cell.hasOwnProperty('sort') &&

@@ -4,7 +4,12 @@ import StyledCell from './components/StyledCell'
 
 const Cell = ({ cell, ...props }) => {
   return (
-    <StyledCell>
+    <StyledCell
+      onClick={() =>
+        Object.prototype.hasOwnProperty.call(props, 'sortBy') &&
+        props.sortBy(cell.accessName)
+      }
+    >
       {cell.displayName}
       {Object.prototype.hasOwnProperty.call(cell, 'sort') &&
         Object.prototype.hasOwnProperty.call(props, 'displaySort') && (
