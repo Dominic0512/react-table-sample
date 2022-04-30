@@ -1,4 +1,4 @@
-# React table assignment
+# React table demo sample
 
 ## Recommend prerequisites environment
 - Node version: v10.16.0 ⤴️
