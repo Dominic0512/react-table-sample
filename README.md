@@ -1,4 +1,4 @@
-# ShopBack table component homework
+# React table assignment
 
 ## Recommend prerequisites environment
 - Node version: v10.16.0 ⤴️
